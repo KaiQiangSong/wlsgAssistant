@@ -1,0 +1,6 @@
+model = 0
+mu = 450000
+ni = 450000
+tie = 450000
+liang = 350000
+food_remain = 200000
