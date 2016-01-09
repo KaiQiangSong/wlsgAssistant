@@ -518,8 +518,9 @@ def get_resource(server,citys):
 
 #open Box
 
-def open_box(server,type,choice):
+def open_box(server,type,choice,pkeys):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_box.php';
+    typeString = str(type+50);
     para = {
         'ajaxId':'_1452296694099',
         'act':'shop_box',
@@ -527,9 +528,24 @@ def open_box(server,type,choice):
         'cache':'false',
         'choice':str(choice),
         'ptyle':'2',
-        'pkey':'a988f0777040adea53aec5b107a1849d',
-        'pid':str(type+50),
+        'pkey':pkeys[typeString],
+        'pid': typeString,
         'action':'insert',
         'r':'1452297007844'
     };
     return tools.post(url,para);
+
+def get_openBox_pkeys(server):
+    resp = shop_box(server);
+    resp = resp.read();
+    pkeys = {};
+    pos = resp.find("item_box_action(");
+    while (pos != -1):
+        end_pos = resp.find(',',pos+1);
+        typeString = resp[pos+16:end_pos];
+        pos1 = resp.find("'",end_pos+1)+1;
+        pos2 = resp.find("'",pos1+1);
+        pkey = resp[pos1:pos2];
+        pkeys[typeString] = pkey;
+        pos = resp.find("item_box_action(",pos+1);
+    return pkeys;
