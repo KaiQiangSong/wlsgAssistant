@@ -20,7 +20,6 @@ def city_relationship(server):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_relationship&act=city_relationship&type=e&cache=false&r=1452076349230';
     return tools.get(url);
 
-#NEED TO DO
 def get_citys(server):
     content = city_relationship(server);
     content = content.read();
@@ -47,6 +46,30 @@ def get_citys(server):
             'y' : string.atoi(content[i * 5]) % 1000 - 400
         };
     return citys;
+
+def get_city0(server):
+    content = city_relationship(server);
+    content = content.read();
+    content = content.replace('<div class="new_city_no">','');
+    content = content.replace('<ul>','');
+    content = content.replace('<li><a href="/switch.php?map_id=','');
+    content = content.replace('" onclick="','');
+    content = content.replace("return switchCity('",' ');
+    content = content.replace('\t',' ');
+    content = content.replace("', '/switch.php?map_id=",' ');
+    content = content.replace("');"+'">',' ');
+    content = content.replace('</a></li>','');
+    content = content.replace('</ul>','');
+    content = content.replace('</div>','');
+    #print content;
+    content = content.split();
+    num = len(content)/5;
+    city0 = {
+            'name' : content[1],
+            'x' : string.atoi(content[0]) / 1000 - 400,
+            'y' : string.atoi(content[0]) % 1000 - 400
+    };
+    return city0;
 
 def get_money(server):
     url ='http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=_1452076349141&act=get_money&type=o&cache=false&r=1452076349231';
@@ -474,3 +497,39 @@ def take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min):
         '&hour2=&r=1452089051639';
     return tools.get(url);
 
+def get_resource(server,citys):
+    for i in range(0,citys['num']):
+        resp = get_transport_massages(server,citys[str(i)]['x'],citys[str(i)]['y']);
+        resp = resp.read();
+        #print resp;
+        resp = resp.replace(':',' ');
+        resp = resp.replace('json=	{',' ');
+        resp = resp.replace('}','');
+        resp = resp.replace(',',' ');
+        resp = resp.split();
+        #print resp;
+        num_attr = len(resp)/2;
+        for j in range(2,num_attr):
+            attr = resp[j*2];
+            #print attr;
+            #print citys[str(i)];
+            citys[str(i)][attr] = string.atoi(resp[j*2+1]);
+    return citys;
+
+#open Box
+
+def open_box(server,type,choice):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop_box.php';
+    para = {
+        'ajaxId':'_1452296694099',
+        'act':'shop_box',
+        'type':'e',
+        'cache':'false',
+        'choice':str(choice),
+        'ptyle':'2',
+        'pkey':'a988f0777040adea53aec5b107a1849d',
+        'pid':str(type+50),
+        'action':'insert',
+        'r':'1452297007844'
+    };
+    return tools.post(url,para);

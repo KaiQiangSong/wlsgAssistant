@@ -2,6 +2,7 @@
 import operation;
 import string;
 import time;
+import login;
 
 transport_model_default = 0;
 transport_model = transport_model_default;
@@ -25,24 +26,7 @@ def presetting1():
     return para;
 
 
-def get_resource(server,citys):
-    for i in range(0,citys['num']):
-        resp = operation.get_transport_massages(server,citys[str(i)]['x'],citys[str(i)]['y']);
-        resp = resp.read();
-        #print resp;
-        resp = resp.replace(':',' ');
-        resp = resp.replace('json=	{',' ');
-        resp = resp.replace('}','');
-        resp = resp.replace(',',' ');
-        resp = resp.split();
-        #print resp;
-        num_attr = len(resp)/2;
-        for j in range(2,num_attr):
-            attr = resp[j*2];
-            #print attr;
-            #print citys[str(i)];
-            citys[str(i)][attr] = string.atoi(resp[j*2+1]);
-    return citys;
+
 
 def transport_needs(citys,para):
     citys_surplus = {};
@@ -81,7 +65,7 @@ def transport_once(server,para):
     #print time.time();
     citys = operation.get_citys(server);
     #print time.time();
-    citys = get_resource(server,citys);
+    citys = operation.get_resource(server,citys);
     #print time.time();
     citys_surplus = transport_needs(citys,para);
     #print time.time();
@@ -125,3 +109,16 @@ def transport_once(server,para):
     else:
         return "Busy";
     return "Error";
+
+def transport_all(server,username,password,para):
+    resp = login.login(username,password);
+
+    while (login.check_login(server) != -1):
+        resp = login.login(username, password);
+        print resp.read();
+        time.sleep(0.1);
+    #para = transport.presetting0();
+    resp = transport_once(server,para);
+    print resp;
+    time.sleep(0.1);
+    return;

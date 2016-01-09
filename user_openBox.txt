@@ -1,0 +1,3 @@
+server = wlh13
+username = 弑魂25
+password = tianxing

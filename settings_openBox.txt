@@ -1,0 +1,6 @@
+model = 1
+mu_percent = 30
+ni_percent = 30
+tie_percent = 30
+liang_percent = 30
+time_delay = 200
