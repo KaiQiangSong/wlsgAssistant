@@ -3,15 +3,17 @@ import urllib;
 import urllib2;
 import string;
 
-def post(url,para):
+def post(url,para,opener):
     postData = urllib.urlencode(para);
-    req = urllib2.Request(url,postData);
-    resp = urllib2.urlopen(req);
+    #req = urllib2.Request(url,postData);
+    #resp = urllib2.urlopen(req);
+    resp = opener.open(url,para);
     return resp;
 
-def get(url):
-    req = urllib2.Request(url);
-    resp = urllib2.urlopen(req);
+def get(url,opener):
+    #req = urllib2.Request(url);
+    #resp = urllib2.urlopen(req);
+    resp = opener.open(url);
     return resp;
 
 def load_para(file_name):
@@ -47,3 +49,20 @@ def load_paraString(file_name):
         para[attr[i*2]] = attr[i*2+1];
     #para = transport.presetting0();
     return para;
+
+def load_user(file_name):
+    #input = codecs.open(file_name,'r','utf-8');
+    input = open(file_name,'r');
+    lines = input.readlines();
+    userlist = {};
+    userlist['num'] = len(lines);
+    for i in range(0,userlist['num']):
+        lines[i] = lines[i].split('|');
+        user = {};
+        user['server'] = lines[i][0];
+        user['username'] = lines[i][1];
+        user['password'] = lines[i][2];
+        userlist[str(i)] = user;
+        del user;
+    input.close();
+    return userlist;

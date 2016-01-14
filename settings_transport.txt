@@ -1,6 +1,7 @@
-model = 0
-mu = 450000
-ni = 450000
-tie = 450000
-liang = 350000
+model = 1
+mu_percent = 80
+ni_percent = 80
+tie_percent = 80
+liang_percent = 20
 food_remain = 200000
+time_delay = 1000
