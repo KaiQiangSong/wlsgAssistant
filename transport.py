@@ -115,10 +115,10 @@ def transport_once(server,para,opener):
         return "Busy";
     return "Error";
 
-def transport_all(server,username,password,para,opener):
+def transport_delay(server,username,password,para,opener):
     resp = transport_once(server,para,opener);
-    print resp;
-    return;
+    time.sleep(time_1000_second  *  para['time_delay']);
+    return resp;
 
 def main_program():
     userList = tools.load_user('user.txt');
@@ -147,7 +147,8 @@ def main_program():
             print 'Server :',server;
             print 'User   :',username;
             #print time.time();
-            transport_all(server,username,password,para_transport,opener);
+            resp = transport_delay(server,username,password,para_transport,opener);
             #print time.time();
+            print resp;
             print '\n\n\n';
     return 0;

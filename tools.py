@@ -7,7 +7,7 @@ def post(url,para,opener):
     postData = urllib.urlencode(para);
     #req = urllib2.Request(url,postData);
     #resp = urllib2.urlopen(req);
-    resp = opener.open(url,para);
+    resp = opener.open(url,postData);
     return resp;
 
 def get(url,opener):

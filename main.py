@@ -7,14 +7,7 @@ import transport;
 import time;
 import string;
 import tools;
+import open_box;
 
 
-transport.main_program();
-
-#username = '弑魂25';
-#password = 'tianxing';
-#server = 'wlh13';
-
-#login.login(username,password);
-#resp = login.get_main(server);
-#print resp.read();
+open_box.main_program();
