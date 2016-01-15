@@ -10,4 +10,4 @@ import tools;
 import open_box;
 
 
-open_box.main_program();
+open_box.main_program_define();

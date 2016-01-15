@@ -79,3 +79,20 @@ def main_program():
     para = tools.load_paraString('user_openBox.txt');
     openBox(para['server'],para['username'],para['password'],settings);
     return ;
+
+def openBox_define(server,username,password,choice,numberBox):
+    connection = login.login(username,password,server);
+    opener = connection['opener'];
+    for i in range(0,numberBox):
+        pkeys = operation.get_openBox_pkeys(server,opener);
+        print 'OpenBox :',i+1;
+        resp = operation.open_box(server,5,choice,pkeys,opener);
+        print resp.read();
+    return ;
+
+def main_program_define():
+    para = tools.load_paraString('user_openBox.txt');
+    choice = input(u'请输入你想要开箱子的类型：1 资源 2 经验 3 装备\n');
+    numberBox = input(u'请输入你想要开箱子的数量：\n');
+    openBox_define(para['server'],para['username'],para['password'],choice,numberBox);
+    return ;
