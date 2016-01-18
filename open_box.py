@@ -64,8 +64,8 @@ def openBox_once(server,para,pkeys,opener):
 
 def openBox(server,username,password,para):
     connection = login.login(username,password,server);
-    opener = connection['opener'];
     while (1):
+        opener = connection['opener'];
         pkeys = operation.get_openBox_pkeys(server,opener);
         resp = openBox_once(server,para,pkeys,opener);
         print resp;

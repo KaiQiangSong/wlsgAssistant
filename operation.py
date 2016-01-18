@@ -549,3 +549,50 @@ def get_openBox_pkeys(server,opener):
         pkeys[typeString] = pkey;
         pos = resp.find("item_box_action(",pos+1);
     return pkeys;
+
+#Train Soldiers
+
+def train_soldiers(server,sid,number,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=train_JunDui';
+    para = {
+        'ajaxId':'',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'soldier_id':str(sid),
+        'soldier_num':str(number),
+        'r':'1452885050968'
+    };
+    return tools.post(url,para,opener);
+
+def train_show(server,sid,div_num,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_JunDui&confirm&soldier_id='\
+        +str(sid)+'&div_num='+str(div_num);
+    para = {
+        'ajaxId':'_1452885960642',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'r':'1452885960642'
+    };
+    return tools.post(url,para,opener);
+
+def get_train_limit(server,sid,div_num,opener):
+    resp = train_show(server,sid,div_num,opener);
+    resp = resp.read();
+    pos1 = resp.find('本条队列最多可征募');
+    str1 = resp[pos1+50:pos1+60];
+    str1 = filter(str.isdigit,str1);
+    pos2 = resp.find('总共可征募');
+    str2 = resp[pos2+40:pos2+50];
+    str2 =filter(str.isdigit,str2);
+    if (str1 == ''):
+        str1 = '0';
+    if (str2 == ''):
+        str2 = '0';
+    #print str1,str2;
+    resp = {
+        'this' : string.atoi(str1),
+        'all' : string.atoi(str2)
+    }
+    return resp;

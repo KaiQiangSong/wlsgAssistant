@@ -54,15 +54,41 @@ def load_user(file_name):
     #input = codecs.open(file_name,'r','utf-8');
     input = open(file_name,'r');
     lines = input.readlines();
+    input.close();
     userlist = {};
     userlist['num'] = len(lines);
     for i in range(0,userlist['num']):
         lines[i] = lines[i].split('|');
-        user = {};
-        user['server'] = lines[i][0];
-        user['username'] = lines[i][1];
-        user['password'] = lines[i][2];
+        user = {
+            'server': lines[i][0],
+            'username' : lines[i][1],
+            'password' : lines[i][2],
+        }
         userlist[str(i)] = user;
         del user;
-    input.close();
     return userlist;
+
+def load_settings_string(file_name,col):
+    input = open(file_name,'r');
+    attr = input.read().split();
+    input.close();
+    num_attr = len(attr);
+    row = num_attr / col;
+    print num_attr;
+    settings= [];
+    for i in range(0,row):
+        this_attr = [];
+        for j in range(0,col):
+            k = i * col + j;
+            this_attr.insert(j,attr[k]);
+        settings.insert(i,this_attr);
+        del this_attr;
+    return settings;
+
+def load_settings(file_name,col):
+    settings = load_settings_string(file_name,col);
+    row = len(settings);
+    for i in range(0,row):
+        for j in range(0,col):
+            settings[i][j] = string.atoi(settings[i][j]);
+    return settings;

@@ -8,6 +8,7 @@ import time;
 import string;
 import tools;
 import open_box;
+import trainSoldiers;
 
 
-open_box.main_program_define();
+trainSoldiers.main_program();
