@@ -4,6 +4,7 @@ import string;
 import time;
 import login;
 import tools;
+import accelerate;
 
 time_delay_default = 100;
 time_1000_second = 0.001;
@@ -89,5 +90,6 @@ def main_program():
                 y = citys[str(j)]['y'];
                 operation.switch(server,x,y,opener);
                 train_soldiers_once(server,para,setting,j,opener);
-            print '\n\n\n';
+                accelerate.accelerate_military(server,para,opener);
+                print '\n\n\n';
     return 0;

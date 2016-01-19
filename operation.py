@@ -273,7 +273,7 @@ def train_QiBing(server,opener):
     };
     return tools.post(url,para,opener);
 
-def train_GoCheng(server,opener):
+def train_GongCheng(server,opener):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_GongCheng';
     para = {
         'ajaxId':'soldier_train_3',
@@ -596,3 +596,97 @@ def get_train_limit(server,sid,div_num,opener):
         'all' : string.atoi(str2)
     }
     return resp;
+
+# Accelerate
+def get_accelerate_pkeys(server,opener):
+    resp = shop_time(server,opener);
+    resp = resp.read();
+    pkeys = {};
+    pos = resp.find("item_res_action(");
+    while (pos != -1):
+        end_pos = resp.find(',',pos+1);
+        typeString = resp[pos+16:end_pos];
+        pos1 = resp.find("'",end_pos+1)+1;
+        pos2 = resp.find("'",pos1+1);
+        pkey = resp[pos1:pos2];
+        #print typeString,pkey;
+        pkeys[typeString] = pkey;
+        pos = resp.find("item_res_action(",pos+1);
+    return pkeys;
+
+def shop(server,queue_id,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop.php';
+    para = {
+        'ajaxId':'_1453185831404',
+        'act':'shopcom',
+        'type':'e',
+        'cache':'false',
+        'action':'build_time_add',
+        'queue_id':queue_id,
+        'r':'1453185841059'
+    };
+    return tools.post(url,para,opener);
+
+def get_build_sids(server,queue_id,opener):
+    resp = shop(server,queue_id,opener);
+    resp = resp.read();
+    sids = {};
+    pos = resp.find("id='item_value'"+' type="radio" value=');
+    while (pos != -1):
+        pos1 = resp.find(":",pos+1);
+        typeString = resp[pos+36:pos1];
+        pos2 = resp.find("'",pos1+1);
+        sid = resp[pos+36:pos2];
+        sids[typeString] = sid;
+        #print typeString,sid;
+        pos = resp.find("id='item_value'"+' type="radio" value=',pos+1);
+    return sids;
+
+def accelerate_military(server,pid,pkey,qid,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop_time.php';
+    para = {
+        'ajaxId':'_1453190668809',
+        'act':'shop_time',
+        'type':'e',
+        'cache':'false',
+        'ptyle':'2',
+        'sid':'',
+        'pkey':pkey,
+        'pid':str(pid),
+        'qid':str(qid),
+        'action':'insert',
+        'r':'1453190676115'
+    };
+    return tools.post(url,para,opener);
+
+def get_queue_num_BuBing(server,opener):
+    resp = train_BuBing(server,opener).read();
+    pos1 = resp.find('[队列数：');
+    if (pos1 == -1):
+        return 0;
+    pos2 = resp.find('/',pos1+1);
+    return string.atoi(resp[pos2-1:pos2]);
+
+def get_queue_num_QiBing(server,opener):
+    resp = train_QiBing(server,opener).read();
+    pos1 = resp.find('[队列数：');
+    if (pos1 == -1):
+        return 0;
+    pos2 = resp.find('/',pos1+1);
+    return string.atoi(resp[pos2-1:pos2]);
+
+def get_queue_num_GongCheng(server,opener):
+    resp = train_GongCheng(server,opener).read();
+    pos1 = resp.find('[队列数：');
+    if (pos1 == -1):
+        return 0;
+    pos2 = resp.find('/',pos1+1);
+    return string.atoi(resp[pos2-1:pos2]);
+
+def get_queue_num_TeShu(server,opener):
+    resp = train_TeShu(server,opener).read();
+    pos1 = resp.find('[队列数：');
+    if (pos1 == -1):
+        return 0;
+    pos2 = resp.find('/',pos1+1);
+    return string.atoi(resp[pos2-1:pos2]);

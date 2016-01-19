@@ -9,6 +9,7 @@ import string;
 import tools;
 import open_box;
 import trainSoldiers;
+import accelerate;
 
 
 trainSoldiers.main_program();

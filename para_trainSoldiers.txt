@@ -1,2 +1,6 @@
 time_delay = 2000
 model = 1
+bu_acc = 1
+qi_acc = 1
+che_acc = 1
+te_acc = 1
