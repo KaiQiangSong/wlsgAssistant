@@ -8,20 +8,20 @@ import cookielib;
 import json;
 
 
-def get_queue(server,opener):
+def get_queue(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=_1452073333621&act=get_queue&type=o&cache=false&r=1452073333729';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def set_city_resource(server,opener):
+def set_city_resource(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=_1452073333611&act=set_city_resource&type=o&cache=false&r=1452073333729';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_relationship(server,opener):
+def city_relationship(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_relationship&act=city_relationship&type=e&cache=false&r=1452076349230';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def get_citys(server,opener):
-    content = city_relationship(server,opener);
+def get_citys(server,opener,httpPara):
+    content = city_relationship(server,opener,httpPara);
     content = content.read();
     content = content.replace('<div class="new_city_no">','');
     content = content.replace('<ul>','');
@@ -47,8 +47,8 @@ def get_citys(server,opener):
         };
     return citys;
 
-def get_city0(server,opener):
-    content = city_relationship(server,opener);
+def get_city0(server,opener,httpPara):
+    content = city_relationship(server,opener,httpPara);
     content = content.read();
     content = content.replace('<div class="new_city_no">','');
     content = content.replace('<ul>','');
@@ -71,17 +71,17 @@ def get_city0(server,opener):
     };
     return city0;
 
-def get_money(server,opener):
+def get_money(server,opener,httpPara):
     url ='http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=_1452076349141&act=get_money&type=o&cache=false&r=1452076349231';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
 
-def city_profile(server,opener):
+def city_profile(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_profile&act=city_profile&type=e&cache=false&r=1452076939722';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
 
-def city_build_resource(server,opener):
+def city_build_resource(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php';
     para = {
         'ajaxId':'city_build_resource',
@@ -90,13 +90,13 @@ def city_build_resource(server,opener):
         'cache':'false',
         'r':'1452077349870'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def city_build_building(server,opener):
+def city_build_building(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_build_building&act=city_build_building&type=e&cache=false&r=1452077759249';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def polity_TuoHuangXinCheng(server,opener):
+def polity_TuoHuangXinCheng(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=polity_TuoHuangXinCheng';
     para = {
         'ajaxId':'city_build_polity',
@@ -105,9 +105,9 @@ def polity_TuoHuangXinCheng(server,opener):
         'cache':'false',
         'r':'1452078034879'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def polity_QianDu(server,opener):
+def polity_QianDu(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=polity_QainDu';
     para = {
         'ajaxId':'city_build_QianDu',
@@ -116,21 +116,21 @@ def polity_QianDu(server,opener):
         'cache':'false',
         'r':'1452078759565'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def city_trade_reassign(server,opener):
+def city_trade_reassign(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?module=trade&ajaxId=city_trade_reassign&act=city_trade_reassign&type=e&cache=false&r=1452078884875';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_trade_transit(server,opener):
+def city_trade_transit(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?module=trade&ajaxId=city_trade_transit&act=city_trade_transit&type=e&cache=false&r=1452078978036';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_trade_buy(server,opener):
+def city_trade_buy(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?module=trade&ajaxId=city_trade_buy&act=city_trade_buy&type=e&cache=false&r=1452079029659';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def user_relation_0(server,opener):
+def user_relation_0(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/user_relation.php?type=friend';
     para = {
         'ajaxId':'user_relation_0',
@@ -139,9 +139,9 @@ def user_relation_0(server,opener):
         'cache':'false',
         'r':'1452079092783'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def user_relation_1(server,opener):
+def user_relation_1(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/user_relation.php?type=enemy';
     para = {
         'ajaxId':'user_relation_1',
@@ -150,33 +150,33 @@ def user_relation_1(server,opener):
         'cache':'false',
         'r':'1452079234916'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def city_manage_0(server,opener):
+def city_manage_0(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_manage_0&act=d&type=e&cache=false&r=1452079357777';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_manage_1(server,opener):
+def city_manage_1(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_manage_1&act=d&type=e&cache=false&r=1452079593042';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_manage_2(server,opener):
+def city_manage_2(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_manage_2&act=d&type=e&cache=false&r=1452079652585';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_manage_5(server,opener):
+def city_manage_5(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_manage_5&act=d&type=e&cache=false&r=1452079727777';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_manage_3(server,opener):
+def city_manage_3(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_manage_3&act=d&type=e&cache=false&r=1452079823091';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def city_manage_4(server,opener):
+def city_manage_4(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=city_manage_4&act=d&type=e&cache=false&r=1452079864855';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def military_war_action(server,opener):
+def military_war_action(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/military_war_action.php';
     para = {
         'ajaxId':'military_war_action',
@@ -185,9 +185,9 @@ def military_war_action(server,opener):
         'cache':'false',
         'r':'1452079973389'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def military_war_news(server,opener):
+def military_war_news(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/military_war_news.php';
     para = {
         'ajaxId':'military_war_news',
@@ -196,9 +196,9 @@ def military_war_news(server,opener):
         'cache':'false',
         'r':'1452080215593'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def military_war_insurance(server,opener):
+def military_war_insurance(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/military_war_insurance.php';
     para = {
         'ajaxId':'military_war_insurance',
@@ -207,9 +207,9 @@ def military_war_insurance(server,opener):
         'cache':'false',
         'r':'1452080641033'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def military_general(server,opener):
+def military_general(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/military_general.php';
     para = {
         'ajaxId':'military_general',
@@ -218,36 +218,36 @@ def military_general(server,opener):
         'cache':'false',
         'r':'1452081276675'
     }
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def user_item(server,opener):
+def user_item(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/item/use_item.php?1452081445534';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def general_effect(server,opener):
+def general_effect(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?module=item&ajaxId=general_effect&act=general_effect&type=e&cache=false&r=1452081446283';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def strengthen_item(server,opener):
+def strengthen_item(server,opener,httpPara):
     url = 'http://wlh13.sg.9wee.com/modules/item/strengthen_item.php?1452081777741';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def embed_item(server,opener):
+def embed_item(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/item/embed_item.php?1452082206327';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def repair_item(server,opener):
+def repair_item(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/item/repair_item.php?1452082265693';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def lower_item(server,opener):
+def lower_item(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/item/lower_item.php?1452082305357';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def hourse(server,opener):
+def hourse(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/horse/horse.php?ajaxId=military_general_zq&act=d&type=e&cache=false&request=horse_info&r=1452082349126';
 
-def train_BuBing(server,opener):
+def train_BuBing(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_BuBing';
     para = {
         'ajaxId':'soldier_train_1',
@@ -256,13 +256,13 @@ def train_BuBing(server,opener):
         'cache':'false',
         'r':'1452082618070'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def soldier(server,opener):
+def soldier(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?module=soldier&ajaxId=_1452082179073&act=get_city_army&type=o&cache=false&r=1452082626224';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def train_QiBing(server,opener):
+def train_QiBing(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_QiBing';
     para = {
         'ajaxId':'soldier_train_2',
@@ -271,9 +271,9 @@ def train_QiBing(server,opener):
         'cache':'false',
         'r':'1452082910625'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def train_GongCheng(server,opener):
+def train_GongCheng(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_GongCheng';
     para = {
         'ajaxId':'soldier_train_3',
@@ -282,9 +282,9 @@ def train_GongCheng(server,opener):
         'cache':'false',
         'r':'1452083129230'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def train_TeShu(server,opener):
+def train_TeShu(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_TeShu';
     para = {
         'ajaxId':'soldier_train_4',
@@ -293,9 +293,9 @@ def train_TeShu(server,opener):
         'cache':'false',
         'r':'1452083307202'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def train_XianJing(server,opener):
+def train_XianJing(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_XianJing';
     para = {
         'ajaxId':'soldier_train_5',
@@ -304,9 +304,9 @@ def train_XianJing(server,opener):
         'cache':'false',
         'r':'1452083577202',
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def research_WuQi(server,opener):
+def research_WuQi(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=research_WuQi';
     para = {
         'ajaxId':'soldier_research_2',
@@ -315,9 +315,9 @@ def research_WuQi(server,opener):
         'cache':'false',
         'r':'1452083774824'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def research_FangJu(server,opener):
+def research_FangJu(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=research_FangJu';
     para = {
         'ajaxId':'soldier_research_3',
@@ -326,9 +326,9 @@ def research_FangJu(server,opener):
         'cache':'false',
         'r':'1452083899287'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def map_top(server,opener):
+def map_top(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/map.php';
     para = {
         'ajaxId':'map_top',
@@ -337,9 +337,9 @@ def map_top(server,opener):
         'cache':'false',
         'r':'1452084142806'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def map_show(server,x,y,opener):
+def map_show(server,x,y,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/map.php?show';
     para = {
         'ajaxId':'',
@@ -350,9 +350,9 @@ def map_show(server,x,y,opener):
         'startY':1+y,
         'r':'1452084427536'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_yiguan(server,opener):
+def union_yiguan(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_lianmeng_yiguan';
     para = {
         'ajaxId':'union_yiguan',
@@ -361,9 +361,9 @@ def union_yiguan(server,opener):
         'cache':'false',
         'r':'1452084640250'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_lianmeng_gaikuang(server,opener):
+def union_lianmeng_gaikuang(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_lianmeng_gaikuang';
     para = {
         'ajaxId':'union_lianmeng_gaikuang',
@@ -372,9 +372,9 @@ def union_lianmeng_gaikuang(server,opener):
         'cache':'false',
         'r':'1452084767653'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_lianmeng_baoku(server,opener):
+def union_lianmeng_baoku(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_lianmeng_baoku';
     para = {
         'ajaxId':'union_baoku',
@@ -383,9 +383,9 @@ def union_lianmeng_baoku(server,opener):
         'cache':'false',
         'r':'1452084998025'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_junqing(server,opener):
+def union_junqing(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_junqing';
     para = {
         'ajaxId':'union_junqing',
@@ -394,9 +394,9 @@ def union_junqing(server,opener):
         'cache':'false',
         'r':'1452085288936'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_lianmeng_shijian(server,opener):
+def union_lianmeng_shijian(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_lianmeng_shijian';
     para = {
         'ajaxId':'union_lianmeng_shijian',
@@ -405,9 +405,9 @@ def union_lianmeng_shijian(server,opener):
         'cache':'false',
         'r':'1452085435933'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_lianmeng_zhanbao(server,c1,c2,opener):
+def union_lianmeng_zhanbao(server,c1,c2,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_lianmeng_zhanbao';
     para = {
         'ajaxId':'union_zhanbao',
@@ -420,9 +420,9 @@ def union_lianmeng_zhanbao(server,c1,c2,opener):
         'c2':c2,
         'r':'1452085664881'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def union_science(server,opener):
+def union_science(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/union.php?action=show&type=union_science';
     para = {
         'ajaxId':'union_science',
@@ -431,13 +431,13 @@ def union_science(server,opener):
         'cache':'false',
         'r':'1452085832395'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def switch(server,x,y,opener):
+def switch(server,x,y,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/switch.php?map_id='+str(x+400)+str(y+400);
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def shop_time(server,opener):
+def shop_time(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_time.php';
     para = {
         'ajaxId':'shop_time',
@@ -446,9 +446,9 @@ def shop_time(server,opener):
         'cache':'false',
         'r':'1452086471119'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def shop_general(server,opener):
+def shop_general(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_general.php';
     para = {
         'ajaxId':'shop_general',
@@ -457,9 +457,9 @@ def shop_general(server,opener):
         'cache':'false',
         'r':'1452086619541'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def shop_box(server,opener):
+def shop_box(server,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_box.php';
     para = {
         'ajaxId':'shop_box',
@@ -468,15 +468,15 @@ def shop_box(server,opener):
         'cache':'false',
         'r':'1452086804300'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
 #transport
 
-def get_transport_massages(server,x,y,opener):
+def get_transport_massages(server,x,y,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=ajax&act=d&type=e&cache=false&map='+str(x+400)+str(y+400)+'&time='+str(int(time.time()*1000));
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min,opener):
+def take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min,opener,httpPara):
     select1 = str(x1+400)+str(y1+400);
     select2 = str(x2+400)+str(y2+400);
     mu = str(mu);
@@ -495,11 +495,11 @@ def take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min,opener):
         '&min1='+min+\
         '&liangshi='+liang+\
         '&hour2=&r=1452089051639';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def get_resource(server,citys,opener):
+def get_resource(server,citys,opener,httpPara):
     for i in range(0,citys['num']):
-        resp = get_transport_massages(server,citys[str(i)]['x'],citys[str(i)]['y'],opener);
+        resp = get_transport_massages(server,citys[str(i)]['x'],citys[str(i)]['y'],opener,httpPara);
         resp = resp.read();
         #print resp;
         resp = resp.replace(':',' ');
@@ -518,7 +518,7 @@ def get_resource(server,citys,opener):
 
 #open Box
 
-def open_box(server,type,choice,pkeys,opener):
+def open_box(server,type,choice,pkeys,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_box.php';
     typeString = str(type+50);
     para = {
@@ -533,10 +533,10 @@ def open_box(server,type,choice,pkeys,opener):
         'action':'insert',
         'r':'1452297007844'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def get_openBox_pkeys(server,opener):
-    resp = shop_box(server,opener);
+def get_openBox_pkeys(server,opener,httpPara):
+    resp = shop_box(server,opener,httpPara);
     resp = resp.read();
     pkeys = {};
     pos = resp.find("item_box_action(");
@@ -552,7 +552,7 @@ def get_openBox_pkeys(server,opener):
 
 #Train Soldiers
 
-def train_soldiers(server,sid,number,opener):
+def train_soldiers(server,sid,number,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=train_JunDui';
     para = {
         'ajaxId':'',
@@ -563,9 +563,9 @@ def train_soldiers(server,sid,number,opener):
         'soldier_num':str(number),
         'r':'1452885050968'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def train_show(server,sid,div_num,opener):
+def train_show(server,sid,div_num,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=show&type=train_JunDui&confirm&soldier_id='\
         +str(sid)+'&div_num='+str(div_num);
     para = {
@@ -575,10 +575,10 @@ def train_show(server,sid,div_num,opener):
         'cache':'false',
         'r':'1452885960642'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def get_train_limit(server,sid,div_num,opener):
-    resp = train_show(server,sid,div_num,opener);
+def get_train_limit(server,sid,div_num,opener,httpPara):
+    resp = train_show(server,sid,div_num,opener,httpPara);
     resp = resp.read();
     pos1 = resp.find('本条队列最多可征募');
     str1 = resp[pos1+50:pos1+60];
@@ -598,8 +598,8 @@ def get_train_limit(server,sid,div_num,opener):
     return resp;
 
 # Accelerate
-def get_accelerate_pkeys(server,opener):
-    resp = shop_time(server,opener);
+def get_accelerate_pkeys(server,opener,httpPara):
+    resp = shop_time(server,opener,httpPara);
     resp = resp.read();
     pkeys = {};
     pos = resp.find("item_res_action(");
@@ -615,7 +615,7 @@ def get_accelerate_pkeys(server,opener):
     return pkeys;
 
 
-def accelerate_military(server,pid,pkey,qid,opener):
+def accelerate_military(server,pid,pkey,qid,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_time.php';
     para = {
         'ajaxId':'_1453190668809',
@@ -630,34 +630,34 @@ def accelerate_military(server,pid,pkey,qid,opener):
         'action':'insert',
         'r':'1453190676115'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def get_queue_num_BuBing(server,opener):
-    resp = train_BuBing(server,opener).read();
+def get_queue_num_BuBing(server,opener,httpPara):
+    resp = train_BuBing(server,opener,httpPara).read();
     pos1 = resp.find('[队列数：');
     if (pos1 == -1):
         return 0;
     pos2 = resp.find('/',pos1+1);
     return string.atoi(resp[pos2-1:pos2]);
 
-def get_queue_num_QiBing(server,opener):
-    resp = train_QiBing(server,opener).read();
+def get_queue_num_QiBing(server,opener,httpPara):
+    resp = train_QiBing(server,opener,httpPara).read();
     pos1 = resp.find('[队列数：');
     if (pos1 == -1):
         return 0;
     pos2 = resp.find('/',pos1+1);
     return string.atoi(resp[pos2-1:pos2]);
 
-def get_queue_num_GongCheng(server,opener):
-    resp = train_GongCheng(server,opener).read();
+def get_queue_num_GongCheng(server,opener,httpPara):
+    resp = train_GongCheng(server,opener,httpPara).read();
     pos1 = resp.find('[队列数：');
     if (pos1 == -1):
         return 0;
     pos2 = resp.find('/',pos1+1);
     return string.atoi(resp[pos2-1:pos2]);
 
-def get_queue_num_TeShu(server,opener):
-    resp = train_TeShu(server,opener).read();
+def get_queue_num_TeShu(server,opener,httpPara):
+    resp = train_TeShu(server,opener,httpPara).read();
     pos1 = resp.find('[队列数：');
     if (pos1 == -1):
         return 0;
@@ -666,7 +666,7 @@ def get_queue_num_TeShu(server,opener):
 
 #Build
 
-def shop(server,queue_id,opener):
+def shop(server,queue_id,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop.php';
     para = {
         'ajaxId':'_1453185831404',
@@ -677,10 +677,10 @@ def shop(server,queue_id,opener):
         'queue_id':queue_id,
         'r':'1453185841059'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def get_build_sids(server,queue_id,opener):
-    resp = shop(server,queue_id,opener);
+def get_build_sids(server,queue_id,opener,httpPara):
+    resp = shop(server,queue_id,opener,httpPara);
     resp = resp.read();
     sids = {};
     if (resp.find('<div class="fl"'+" id='military_build' style='display:block'>") != -1):
@@ -698,18 +698,18 @@ def get_build_sids(server,queue_id,opener):
         pos = resp.find("id='item_value'"+' type="radio" value=',pos+1);
     return sids;
 
-def demolish_building(server,pid,opener):
+def demolish_building(server,pid,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=cc&act=demolish_building&type=o&cache=false&pid='+str(pid)+'&r=1453215883283'
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def upgrade_building(server,pid,opener):
+def upgrade_building(server,pid,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=sj&act=upgrade_building&type=o&cache=false&pid='+str(pid)+'&r=1453216112315';
-    return tools.get(url,opener);
+    return tools.get(url,opener,httpPara);
 
-def get_building_levels(server,opener):
+def get_building_levels(server,opener,httpPara):
     levels = {};
 
-    resp = city_build_resource(server,opener);
+    resp = city_build_resource(server,opener,httpPara);
     resp = resp.read();
     pos = resp.find("mask.loadInfo('/modules/build/build.php?rid=");
     while (pos != -1):
@@ -736,7 +736,7 @@ def get_building_levels(server,opener):
             print 'Repeat';
         #print pid,level;
 
-    resp = city_build_building(server,opener);
+    resp = city_build_building(server,opener,httpPara);
     resp = resp.read();
     pos = resp.find('<a href="#" onclick="'+"mask.loadInfo('/modules/build/build.php?rid=");
     while (pos != -1):
@@ -751,15 +751,15 @@ def get_building_levels(server,opener):
         levels[pid] = level;
     return levels;
 
-def get_building_information(server,opener):
-    resp = get_queue(server,opener);
+def get_building_information(server,opener,httpPara):
+    resp = get_queue(server,opener,httpPara);
     message = json.load(resp);
     if (message[1]['is_building'] == None):
         return "无在建建筑";
     else:
         return message[1]['is_building'][0];
 
-def accelerate_building(server,queue_id,sid,opener):
+def accelerate_building(server,queue_id,sid,opener,httpPara):
     url = 'http://wlh13.sg.9wee.com/modules/military/shop_time.php';
     para = {
         'ajaxId':'_1453228315005',
@@ -774,11 +774,11 @@ def accelerate_building(server,queue_id,sid,opener):
         'action':'insert',
         'r':'1453228321209'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
 #Reserach
 
-def research_WuQi(server,soliderId,opener):
+def research_WuQi(server,soliderId,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=research_WuQi';
     para = {
         'ajaxId':'',
@@ -788,9 +788,9 @@ def research_WuQi(server,soliderId,opener):
         'soldier_id':str(soliderId),
         'r':'1453531501235'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def research_FangJu(server,soliderId,opener):
+def research_FangJu(server,soliderId,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=research_FangJu';
     para = {
         'ajaxId':'',
@@ -800,9 +800,9 @@ def research_FangJu(server,soliderId,opener):
         'soldier_id':str(soliderId),
         'r':'1453532829170'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 
-def research_BingZhong(server,soliderId,opener):
+def research_BingZhong(server,soliderId,opener,httpPara):
     url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=research_BingZhong';
     para = {
         'ajaxId':'',
@@ -812,5 +812,5 @@ def research_BingZhong(server,soliderId,opener):
         'soldier_id':str(soliderId),
         'r':'1453532995761'
     };
-    return tools.post(url,para,opener);
+    return tools.post(url,para,opener,httpPara);
 

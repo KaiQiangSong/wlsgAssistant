@@ -3,17 +3,17 @@ import urllib;
 import urllib2;
 import string;
 
-def post(url,para,opener):
+def post(url,para,opener,httpPara):
     postData = urllib.urlencode(para);
     #req = urllib2.Request(url,postData);
     #resp = urllib2.urlopen(req);
-    resp = opener.open(url,postData);
+    resp = opener.open(url,postData,timeout = httpPara['timeout']);
     return resp;
 
-def get(url,opener):
+def get(url,opener,httpPara):
     #req = urllib2.Request(url);
     #resp = urllib2.urlopen(req);
-    resp = opener.open(url);
+    resp = opener.open(url,timeout = httpPara['timeout']);
     return resp;
 
 def load_para(file_name):

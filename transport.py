@@ -67,11 +67,11 @@ def transport_needs(citys,para):
     return citys_surplus;
 
 
-def transport_once(server,para,opener):
+def transport_once(server,para,opener,httpPara):
     #print time.time();
-    citys = operation.get_citys(server,opener);
+    citys = operation.get_citys(server,opener,httpPara);
     #print time.time();
-    citys = operation.get_resource(server,citys,opener);
+    citys = operation.get_resource(server,citys,opener,httpPara);
     #print time.time();
     citys_surplus = transport_needs(citys,para);
     #print time.time();
@@ -100,7 +100,7 @@ def transport_once(server,para,opener):
                 min1 = 0;
                 if (total < citys_surplus['0']['transport']):
                     print 'Carry : ',mu,ni,tie,liang;
-                    resp = operation.take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min1,opener);
+                    resp = operation.take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min1,opener,httpPara);
                     return resp.read();
                 else:
                     rate = citys_surplus['0']['transport'] * 1.0 / total;
@@ -109,19 +109,19 @@ def transport_once(server,para,opener):
                     tie = int(tie * rate);
                     liang = int(liang * rate);
                     print 'Carry : ',mu,ni,tie,liang;
-                    resp = operation.take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min1,opener);
+                    resp = operation.take_transport(server,x1,y1,x2,y2,mu,ni,tie,liang,hour,min1,opener,httpPara);
                     return resp.read();
         return "Satisfied";
     else:
         return "Busy";
     return "Error";
 
-def transport_delay(server,username,password,para,opener,paraHTTP):
-    retryTime = paraHTTP['retry_time'];
+def transport_delay(server,username,password,para,opener,httpPara):
+    retryTime = httpPara['retry_time'];
     while (retryTime > 0):
         flag = 0;
         try:
-            resp = transport_once(server,para,opener);
+            resp = transport_once(server,para,opener,httpPara);
         except urllib2.URLError as e:
             #print e.errno,e.reason;
             error = e.reason;
