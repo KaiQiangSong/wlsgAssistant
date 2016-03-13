@@ -130,17 +130,15 @@ def main_program():
             username = userList[str(i)]['username'];
             password = userList[str(i)]['password'];
             connection = userList[str(i)]['connection'];
-            #cj = connection['cj'];
+
+            if (connection['error'] != ''):
+                print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
+                print 'Server :',server;
+                print 'User   :',username;
+                print 'Login Failed';
+                print '\n\n\n';
+                continue;
             opener = connection['opener'];
-            #opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj));
-            #urllib2.install_opener(opener);
-            #login.get_main(server,opener);
-            #while (login.check_login(server) == -1):
-            #    print "login again";
-            #    del userList[str(i)]['connection'];
-            #    connection = login.login(username, password);
-            #    time.sleep(0.1);
-            #userList[str(i)]['connection'] = connection;
 
             timer= time.localtime();
             print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
