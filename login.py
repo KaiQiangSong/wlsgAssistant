@@ -33,7 +33,7 @@ def login(username,password,server,paraHTTP):
 					error = e.reason;
 					flag = 1;
 				except socket.timeout as e:
-					print 'Time out';
+					#print 'Time out';
 					e = 'Socket Time Out';
 					flag = 1;
 				if (flag > 0):
@@ -68,7 +68,7 @@ def login(username,password,server,paraHTTP):
 					error = e.reason;
 					flag = 1;
 				except socket.timeout as e:
-					print 'Time out';
+					#print 'Time out';
 					e = 'Socket Time Out';
 					flag = 1;
 				if (flag > 0):
@@ -104,7 +104,7 @@ def login(username,password,server,paraHTTP):
 				error = e.reason;
 				flag = 1;
 			except socket.timeout as e:
-				print 'Time out';
+				#print 'Time out';
 				e = 'Socket Time Out';
 				flag = 1;
 			if (flag > 0):
@@ -141,7 +141,7 @@ def login(username,password,server,paraHTTP):
 				error = e.reason;
 				flag = 1;
 			except socket.timeout as e:
-				print 'Time out';
+				#print 'Time out';
 				e = 'Socket Time Out';
 				flag = 1;
 			if (flag > 0):
@@ -187,7 +187,7 @@ def get_main(server,opener,paraHTTP):
 			error = e.reason;
 			flag = 1;
 		except socket.timeout as e:
-			print 'Time out';
+			#print 'Time out';
 			e = 'Socket Time Out';
 			flag = 1;
 		if (flag > 0):

@@ -5,6 +5,7 @@ import time;
 import login;
 import tools;
 import urllib2;
+import socket;
 
 time_delay_default = 100;
 time_1000_second = 0.001;
@@ -115,15 +116,39 @@ def transport_once(server,para,opener):
         return "Busy";
     return "Error";
 
-def transport_delay(server,username,password,para,opener):
-    resp = transport_once(server,para,opener);
+def transport_delay(server,username,password,para,opener,paraHTTP):
+    retryTime = paraHTTP['retry_time'];
+    while (retryTime > 0):
+        flag = 0;
+        try:
+            resp = transport_once(server,para,opener);
+        except urllib2.URLError as e:
+            #print e.errno,e.reason;
+            error = e.reason;
+            flag = 1;
+        except urllib2.HTTPError as e:
+            #print e.code,e.reason;
+            error = e.reason;
+            flag = 1;
+        except socket.timeout as e:
+            #print 'Time out';
+            e = 'Socket Time Out';
+            flag = 1;
+        if (flag > 0):
+            retryTime = retryTime - 1;
+        else:
+            break;
+    # Forward the Exception Error
+    if (flag):
+        print error;
+        return error;
     time.sleep(time_1000_second  *  para['time_delay']);
     return resp;
 
 def main_program():
     userList = tools.load_user('user.txt');
-    loginPara = tools.load_para('loginHttpPara.txt');
-    login.login_all(userList,loginPara);
+    httpPara = tools.load_para('httpPara.txt');
+    login.login_all(userList,httpPara);
     para_transport = tools.load_para('settings_transport.txt');
     while(1):
         for i in range(0,userList['num']):
@@ -146,7 +171,7 @@ def main_program():
             print 'Server :',server;
             print 'User   :',username;
             #print time.time();
-            resp = transport_delay(server,username,password,para_transport,opener);
+            resp = transport_delay(server,username,password,para_transport,opener,httpPara);
             #print time.time();
             print resp;
             print '\n\n\n';
