@@ -122,7 +122,8 @@ def transport_delay(server,username,password,para,opener):
 
 def main_program():
     userList = tools.load_user('user.txt');
-    login.login_all(userList);
+    loginPara = tools.load_para('loginHttpPara.txt');
+    login.login_all(userList,loginPara);
     para_transport = tools.load_para('settings_transport.txt');
     while(1):
         for i in range(0,userList['num']):

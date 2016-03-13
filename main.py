@@ -18,9 +18,9 @@ import trainSoldiers;
 import accelerate;
 import Building;
 
-# Set Default Timeout
-default_timeout = 10;
-socket.setdefaulttimeout(default_timeout);
+# Set Default Timeout Way 1
+#default_timeout = 10;
+#socket.setdefaulttimeout(default_timeout);
 
 # Set SSL
 
