@@ -614,33 +614,6 @@ def get_accelerate_pkeys(server,opener):
         pos = resp.find("item_res_action(",pos+1);
     return pkeys;
 
-def shop(server,queue_id,opener):
-    url = 'http://'+server+'.sg.9wee.com/modules/military/shop.php';
-    para = {
-        'ajaxId':'_1453185831404',
-        'act':'shopcom',
-        'type':'e',
-        'cache':'false',
-        'action':'build_time_add',
-        'queue_id':queue_id,
-        'r':'1453185841059'
-    };
-    return tools.post(url,para,opener);
-
-def get_build_sids(server,queue_id,opener):
-    resp = shop(server,queue_id,opener);
-    resp = resp.read();
-    sids = {};
-    pos = resp.find("id='item_value'"+' type="radio" value=');
-    while (pos != -1):
-        pos1 = resp.find(":",pos+1);
-        typeString = resp[pos+36:pos1];
-        pos2 = resp.find("'",pos1+1);
-        sid = resp[pos+36:pos2];
-        sids[typeString] = sid;
-        #print typeString,sid;
-        pos = resp.find("id='item_value'"+' type="radio" value=',pos+1);
-    return sids;
 
 def accelerate_military(server,pid,pkey,qid,opener):
     url = 'http://'+server+'.sg.9wee.com/modules/military/shop_time.php';
@@ -690,3 +663,154 @@ def get_queue_num_TeShu(server,opener):
         return 0;
     pos2 = resp.find('/',pos1+1);
     return string.atoi(resp[pos2-1:pos2]);
+
+#Build
+
+def shop(server,queue_id,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop.php';
+    para = {
+        'ajaxId':'_1453185831404',
+        'act':'shopcom',
+        'type':'e',
+        'cache':'false',
+        'action':'build_time_add',
+        'queue_id':queue_id,
+        'r':'1453185841059'
+    };
+    return tools.post(url,para,opener);
+
+def get_build_sids(server,queue_id,opener):
+    resp = shop(server,queue_id,opener);
+    resp = resp.read();
+    sids = {};
+    if (resp.find('<div class="fl"'+" id='military_build' style='display:block'>") != -1):
+        sids['model'] = 1;
+    else:
+        sids['model'] = 0;
+    pos = resp.find("id='item_value'"+' type="radio" value=');
+    while (pos != -1):
+        pos1 = resp.find(":",pos+1);
+        typeString = resp[pos+36:pos1];
+        pos2 = resp.find("'",pos1+1);
+        sid = resp[pos+36:pos2];
+        sids[typeString] = sid;
+        #print typeString,sid;
+        pos = resp.find("id='item_value'"+' type="radio" value=',pos+1);
+    return sids;
+
+def demolish_building(server,pid,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=cc&act=demolish_building&type=o&cache=false&pid='+str(pid)+'&r=1453215883283'
+    return tools.get(url,opener);
+
+def upgrade_building(server,pid,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/gateway.php?ajaxId=sj&act=upgrade_building&type=o&cache=false&pid='+str(pid)+'&r=1453216112315';
+    return tools.get(url,opener);
+
+def get_building_levels(server,opener):
+    levels = {};
+
+    resp = city_build_resource(server,opener);
+    resp = resp.read();
+    pos = resp.find("mask.loadInfo('/modules/build/build.php?rid=");
+    while (pos != -1):
+        pos1 = pos + 44;
+        pos2 = resp.find("'",pos1);
+        pid = resp[pos1:pos2];
+        pos1 = resp.find('<div class="sg_jza_lv">',pos2) + 23;
+        pos2 = resp.find('<',pos1);
+        level = string.atoi(resp[pos1:pos2]);
+        pos = resp.find("mask.loadInfo('/modules/build/build.php?rid=",pos2);
+        if (pos < 0):
+            break;
+        pos1 = pos + 44;
+        pos2 = resp.find("'",pos1);
+        pid2 = resp[pos1:pos2];
+        while (pid == pid2):
+            pos = resp.find("mask.loadInfo('/modules/build/build.php?rid=",pos2);
+            pos1 = pos + 44;
+            pos2 = resp.find("'",pos1);
+            pid2 = resp[pos1:pos2];
+        if (pid not in levels):
+            levels[pid] = level;
+        else:
+            print 'Repeat';
+        #print pid,level;
+
+    resp = city_build_building(server,opener);
+    resp = resp.read();
+    pos = resp.find('<a href="#" onclick="'+"mask.loadInfo('/modules/build/build.php?rid=");
+    while (pos != -1):
+        pos1 = pos + 65;
+        pos2 = resp.find("'",pos1);
+        pid = resp[pos1:pos2];
+        pos1 = resp.find('<div class="sg_jza_lv">',pos2) + 23;
+        pos2 = resp.find('<',pos1);
+        level = string.atoi(resp[pos1:pos2]);
+        pos = resp.find('<a href="#" onclick="'+"mask.loadInfo('/modules/build/build.php?rid=",pos2);
+        #pos = resp.find('<a href="#" onclick="'+"mask.loadInfo('/modules/build/build.php?rid=",pos+1);
+        levels[pid] = level;
+    return levels;
+
+def get_building_information(server,opener):
+    resp = get_queue(server,opener);
+    message = json.load(resp);
+    if (message[1]['is_building'] == None):
+        return "无在建建筑";
+    else:
+        return message[1]['is_building'][0];
+
+def accelerate_building(server,queue_id,sid,opener):
+    url = 'http://wlh13.sg.9wee.com/modules/military/shop_time.php';
+    para = {
+        'ajaxId':'_1453228315005',
+        'act':'shop_time',
+        'type':'e',
+        'cache':'false',
+        'ptyle':'2',
+        'sid':sid,
+        'queue_id':queue_id,
+        'pid':'',
+        'pkey':'',
+        'action':'insert',
+        'r':'1453228321209'
+    };
+    return tools.post(url,para,opener);
+
+#Reserach
+
+def research_WuQi(server,soliderId,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=research_WuQi';
+    para = {
+        'ajaxId':'',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'soldier_id':str(soliderId),
+        'r':'1453531501235'
+    };
+    return tools.post(url,para,opener);
+
+def research_FangJu(server,soliderId,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=research_FangJu';
+    para = {
+        'ajaxId':'',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'soldier_id':str(soliderId),
+        'r':'1453532829170'
+    };
+    return tools.post(url,para,opener);
+
+def research_BingZhong(server,soliderId,opener):
+    url = 'http://'+server+'.sg.9wee.com/modules/train.php?action=do&type=research_BingZhong';
+    para = {
+        'ajaxId':'',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'soldier_id':str(soliderId),
+        'r':'1453532995761'
+    };
+    return tools.post(url,para,opener);
+

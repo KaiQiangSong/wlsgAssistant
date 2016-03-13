@@ -2,35 +2,54 @@
 import urllib;
 import urllib2;
 import cookielib;
-import json
+import json;
+import os;
 
 def login(username,password,server):
 	# First url request
 	url_login = 'https://passport.9wee.com/login';
 	cookielib.Absent();
-	cj = cookielib.CookieJar();
-	opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj));
-	urllib2.install_opener(opener);
-	resp = opener.open(url_login);
+	file_name = server+'|'+username+'.txt';
+	error = '';
+	if (os.path.exists(file_name)):
+		cj = cookielib.MozillaCookieJar();
+		cj.load(file_name, ignore_discard=True, ignore_expires=True)
+		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj));
+		if (check_login(server,opener) < 0):
+			cj = cookielib.MozillaCookieJar(file_name);
+			opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj));
+			resp = opener.open(url_login);
+			para = {
+				"username": username,
+				"password": password
+			};
+			postData = urllib.urlencode(para);
+			resp = opener.open(url_login,postData);
+			resp = get_main(server,opener);
+			cj.save(ignore_discard=True, ignore_expires=True);
+			if (check_login(server,opener) < 0):
+				error = 'Login Failed';
+	else:
+		cj = cookielib.MozillaCookieJar(file_name);
+		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj));
+		resp = opener.open(url_login);
+		# Second time do url Request, the CookieJar will auto handle the cookie
+		#username = username.encode('utf-8');
+		para = {
+		"username": username,
+		"password": password
+		};
+		postData = urllib.urlencode(para);
+		resp = opener.open(url_login,postData);
+		resp = get_main(server,opener);
+		cj.save(ignore_discard=True, ignore_expires=True);
+		if (check_login(server,opener) < 0):
+			error = 'Login Failed';
 
-	# Second time do url Request, the CookieJar will auto handle the cookie
-	#username = username.encode('utf-8');
-
-	#username = username.encode('utf-8');
-	para = {
-	"username": username,
-	"password": password
-	}
-
-	#print para;
-
-	postData = urllib.urlencode(para);
-	resp = opener.open(url_login,postData);
-	resp = get_main(server,opener);
 	result = {
 		'cj' : cj,
 		'opener' : opener,
-		'resp' : resp
+		'error' : error
 	};
 	return result;
 
@@ -43,8 +62,8 @@ def get_main(server,opener):
 	#result = resp.read();
 	return resp;
 
-def check_login(server):
-	resp = get_main(server);
+def check_login(server,opener):
+	resp = get_main(server,opener);
 	message = resp.read();
 	text = u'抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活';
 	text = text.encode('utf-8');

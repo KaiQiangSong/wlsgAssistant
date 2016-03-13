@@ -58,7 +58,7 @@ def load_user(file_name):
     userlist = {};
     userlist['num'] = len(lines);
     for i in range(0,userlist['num']):
-        lines[i] = lines[i].split('|');
+        lines[i] = lines[i].split();
         user = {
             'server': lines[i][0],
             'username' : lines[i][1],

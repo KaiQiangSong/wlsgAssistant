@@ -61,6 +61,40 @@ def accelerate_military(server,para,opener):
     time.sleep(time_1000_second * para['time_delay'])
     return ;
 
+def accelerate_building(server,para,opener):
+    info = operation.get_building_information(server,opener);
+    if (info == "无在建建筑"):
+        print "无在建建筑";
+    elif (para['model_acc'] > 0):
+        sids = operation.get_build_sids(server,info['queue_id'],opener);
+        if (info['need_time'] < 3600):
+            if (sids['model'] > 0):
+                resp = operation.accelerate_building(server,info['queue_id'],sids['33'],opener);
+            else:
+                resp = operation.accelerate_building(server,info['queue_id'],sids['30'],opener);
+        elif (info['need_time'] < 16200):
+            if (sids['model'] > 0):
+                resp = operation.accelerate_building(server,info['queue_id'],sids['32'],opener);
+            else:
+                resp = operation.accelerate_building(server,info['queue_id'],sids['29'],opener);
+        elif (info['need_time'] < 25200):
+            if (sids['model'] > 0):
+                resp = operation.accelerate_building(server,info['queue_id'],sids['31'],opener);
+            else:
+                resp = operation.accelerate_building(server,info['queue_id'],sids['28'],opener);
+        else:
+            if (sids['model'] > 0):
+                resp = operation.accelerate_building(server,info['queue_id'],sids['13'],opener);
+            else:
+                resp = operation.accelerate_building(server,info['queue_id'],sids['12'],opener);
+        print resp.read();
+    return;
+
+def accelerate_technology(server,para,opener):
+
+    return ;
+
+
 def accelerate_once(server,para,opener):
     return ;
 
