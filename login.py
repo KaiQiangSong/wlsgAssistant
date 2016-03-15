@@ -34,7 +34,7 @@ def login(username,password,server,paraHTTP):
 					flag = 1;
 				except socket.timeout as e:
 					#print 'Time out';
-					e = 'Socket Time Out';
+					error = 'Socket Time Out';
 					flag = 1;
 				if (flag > 0):
 					retryTime = retryTime - 1;
@@ -69,7 +69,7 @@ def login(username,password,server,paraHTTP):
 					flag = 1;
 				except socket.timeout as e:
 					#print 'Time out';
-					e = 'Socket Time Out';
+					error = 'Socket Time Out';
 					flag = 1;
 				if (flag > 0):
 					retryTime = retryTime - 1;
@@ -105,7 +105,7 @@ def login(username,password,server,paraHTTP):
 				flag = 1;
 			except socket.timeout as e:
 				#print 'Time out';
-				e = 'Socket Time Out';
+				error = 'Socket Time Out';
 				flag = 1;
 			if (flag > 0):
 				retryTime = retryTime - 1;
@@ -142,7 +142,7 @@ def login(username,password,server,paraHTTP):
 				flag = 1;
 			except socket.timeout as e:
 				#print 'Time out';
-				e = 'Socket Time Out';
+				error = 'Socket Time Out';
 				flag = 1;
 			if (flag > 0):
 				retryTime = retryTime - 1;
@@ -156,7 +156,7 @@ def login(username,password,server,paraHTTP):
 				'error' : error
 			};
 			return result;
-		resp = get_main(server,opener);
+		resp = get_main(server,opener,paraHTTP);
 		cj.save(ignore_discard=True, ignore_expires=True);
 		if (check_login(server,opener,paraHTTP) < 0):
 			error = 'Login Failed';
@@ -188,7 +188,7 @@ def get_main(server,opener,paraHTTP):
 			flag = 1;
 		except socket.timeout as e:
 			#print 'Time out';
-			e = 'Socket Time Out';
+			error = 'Socket Time Out';
 			flag = 1;
 		if (flag > 0):
 			retryTime = retryTime - 1;

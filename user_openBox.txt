@@ -1,3 +1,3 @@
-server = wz28
-username = 后也将变
-password = 150128
+server = wzj7
+username = xiao4399991
+password = tianxing
