@@ -25,4 +25,4 @@ import Building;
 # Set SSL
 
 # Main Program
-open_box.main_program_define();
+trainSoldiers.main_program();
