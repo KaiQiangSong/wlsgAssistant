@@ -632,6 +632,22 @@ def accelerate_military(server,pid,pkey,qid,opener,httpPara):
     };
     return tools.post(url,para,opener,httpPara);
 
+def accelerate_research(server,pid,pkey,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop_time.php';
+    para = {
+        'ajaxId':'_1458955253380',
+        'act':'shop_time',
+        'type':'e',
+        'cache':'false',
+        'ptyle':'2',
+        'sid':'',
+        'pkey':pkey,
+        'pid':pid,
+        'action':'insert',
+        'r':'1458955295179'
+    };
+    return tools.post(url,para,opener,httpPara);
+
 def get_queue_num_BuBing(server,opener,httpPara):
     resp = train_BuBing(server,opener,httpPara).read();
     pos1 = resp.find('[队列数：');
@@ -814,3 +830,47 @@ def research_BingZhong(server,soliderId,opener,httpPara):
     };
     return tools.post(url,para,opener,httpPara);
 
+# Activate Buffs
+def activate_general_buffs(server,pid,pkey,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop_general.php';
+    para = {
+        'ajaxId':'_1458499690182',
+        'act':'shop_general',
+        'type':'e',
+        'cache':'false',
+        'ptyle':'2',
+        'pkey':pkey,
+        'pid': pid,
+        'action':'insert',
+        'r':'1458499923285'
+    };
+    return tools.post(url,para,opener,httpPara);
+
+def shop_general(server,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/shop_general.php';
+    para = {
+        'ajaxId':'shop_general',
+        'act':'shop_general',
+        'type':'e',
+        'cache':'false',
+        'r':'1458499698496'
+    };
+    return tools.post(url,para,opener,httpPara);
+
+def get_general_pkeys(server,opener,httpPara):
+    resp = shop_general(server,opener,httpPara);
+    resp = resp.read();
+    pkeys = {};
+    pos = resp.find("item_res_action(");
+    while (pos != -1):
+        pos1 = resp.find('(',pos+1);
+        pos2 = resp.find(',',pos+1);
+        pos3 = resp.find(')',pos2+1);
+        typeString = resp[pos1+1:pos2];
+        typeString = typeString.strip("'");
+        pkey = resp[pos2+1:pos3];
+        pkey = pkey.strip("'");
+        #print typeString,':',pkey;
+        pkeys[typeString] = pkey;
+        pos = resp.find("item_res_action(",pos3+1);
+    return pkeys;

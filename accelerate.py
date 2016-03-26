@@ -4,6 +4,8 @@ import string;
 import time;
 import login;
 import tools;
+import urllib2;
+import socket;
 
 time_delay_default = 100;
 time_1000_second = 0.001;
@@ -90,8 +92,41 @@ def accelerate_building(server,para,opener):
         print resp.read();
     return;
 
-def accelerate_technology(server,para,opener):
+def accelerate_technology_once(server,opener,httpPara):
+    pkeys = operation.get_accelerate_pkeys(server,opener,httpPara);
+    resp = operation.accelerate_research(server,'14',pkeys['14'],opener,httpPara);
+    print resp.read();
+    resp = operation.accelerate_research(server,'15',pkeys['15'],opener,httpPara);
+    print resp.read();
+    resp = operation.accelerate_research(server,'16',pkeys['16'],opener,httpPara);
+    print resp.read();
+    return ;
 
+def accelerate_technology_delay(server,opener,httpPara):
+    retryTime = httpPara['retry_time'];
+    while (retryTime > 0):
+        flag = 0;
+        try:
+            accelerate_technology_once(server,opener,httpPara);
+        except urllib2.URLError as e:
+            #print e.errno,e.reason;
+            error = e.reason;
+            flag = 1;
+        except urllib2.HTTPError as e:
+            #print e.code,e.reason;
+            error = e.reason;
+            flag = 1;
+        except socket.timeout as e:
+            #print 'Time out';
+            error = 'Socket Time Out';
+            flag = 1;
+        if (flag > 0):
+            retryTime = retryTime - 1;
+        else:
+            break;
+        # Forward the Exception Error
+    if (flag):
+        print error;
     return ;
 
 
@@ -100,35 +135,28 @@ def accelerate_once(server,para,opener):
 
 def main_program():
     userList = tools.load_user('user.txt');
-    login.login_all(userList);
-    #settings = tools.load_settings('settings_trainSoldiers.txt',8);
-    para = tools.load_para('para_accelerate.txt');
+    httpPara = tools.load_para('httpPara.txt');
+    login.login_all(userList,httpPara);
     while(1):
         for i in range(0,userList['num']):
-            #setting = settings[i];
             server = userList[str(i)]['server'];
             username = userList[str(i)]['username'];
+            password = userList[str(i)]['password'];
             connection = userList[str(i)]['connection'];
-            opener = connection['opener'];
 
-
-            #timer= time.localtime();
-            #print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
-            #print 'Server :',server;
-            #print 'User   :',username;
-
-
-            #print time.time();
-            citys = operation.get_citys(server,opener);
-            for j in range(0,citys['num']):
-                timer= time.localtime();
+            if (connection['error'] != ''):
                 print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
                 print 'Server :',server;
                 print 'User   :',username;
-                print 'City  :',j;
-                x = citys[str(j)]['x'];
-                y = citys[str(j)]['y'];
-                operation.switch(server,x,y,opener);
-                #accelerate_once(server,para,opener);
+                print 'Login Failed';
+                print '\n\n\n';
+                continue;
+            opener = connection['opener'];
+
+            timer= time.localtime();
+            print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
+            print 'Server :',server;
+            print 'User   :',username;
+
+            accelerate_technology_delay(server,opener,httpPara);
             print '\n\n\n';
-    return 0;

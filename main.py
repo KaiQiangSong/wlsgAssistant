@@ -17,6 +17,7 @@ import open_box;
 import trainSoldiers;
 import accelerate;
 import Building;
+import activate_buffs;
 
 # Set Default Timeout Way 1
 #default_timeout = 10;
@@ -25,4 +26,5 @@ import Building;
 # Set SSL
 
 # Main Program
-trainSoldiers.main_program();
+
+accelerate.main_program();
