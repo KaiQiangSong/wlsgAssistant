@@ -74,7 +74,6 @@ def load_settings_string(file_name,col):
     input.close();
     num_attr = len(attr);
     row = num_attr / col;
-    print num_attr;
     settings= [];
     for i in range(0,row):
         this_attr = [];

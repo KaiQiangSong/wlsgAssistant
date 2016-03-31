@@ -27,4 +27,4 @@ import activate_buffs;
 
 # Main Program
 
-accelerate.main_program();
+trainSoldiers.main_program();

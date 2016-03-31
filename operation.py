@@ -874,3 +874,44 @@ def get_general_pkeys(server,opener,httpPara):
         pkeys[typeString] = pkey;
         pos = resp.find("item_res_action(",pos3+1);
     return pkeys;
+
+def change_Soldiers(server,sid,num,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/soldier_change.php';
+    para = {
+        'ajaxId':'_1459063807623',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'action':'change',
+        'change_type_id':'1',
+        'soldiers_id':sid,
+        'soldiers_num':num,
+        'r':'1459063814107'
+    };
+    return tools.post(url,para,opener,httpPara);
+
+def show_change_Soldiers(server,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/military/soldier_change.php?action=show';
+    para = {
+        'ajaxId':'_1459066175043',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'r':'1459066175043'
+    };
+    return tools.post(url,para,opener,httpPara);
+
+def get_change_Soldiers(server,opener,httpPara):
+    resp = show_change_Soldiers(server,opener,httpPara).read();
+    soldiers = {};
+    pos = resp.find('<input type="hidden" name="');
+    while (pos!=-1):
+        pos1 = resp.find('value="',pos+1);
+        pos2 = resp.find('/>',pos1+1);
+        s1 = resp[pos+38:pos1-2];
+        s2 = resp[pos1+7:pos2-1];
+        soldiers[s1] = string.atoi(s2);
+        #print s1;
+        #print s2;
+        pos = resp.find('<input type="hidden" name="',pos2+1);
+    return soldiers;

@@ -10,14 +10,14 @@ import socket;
 time_delay_default = 100;
 time_1000_second = 0.001;
 
-def accelerate_military(server,para,opener):
-    pkeys = operation.get_accelerate_pkeys(server,opener);
+def accelerate_military(server,para,opener,httpPara):
+    pkeys = operation.get_accelerate_pkeys(server,opener,httpPara);
     if (para['bu_acc'] > 0):
         print '步兵';
-        num = operation.get_queue_num_BuBing(server,opener);
+        num = operation.get_queue_num_BuBing(server,opener,httpPara);
         print '队列数:',num;
         for i in range(0,num):
-            resp = operation.accelerate_military(server,17,pkeys['17'],i,opener);
+            resp = operation.accelerate_military(server,17,pkeys['17'],i,opener,httpPara);
             resp = resp.read();
             if (resp.find('激活成功！') == -1):
                 resp = '当前城池没有征募兵任务，或最少10秒一个';
@@ -26,10 +26,10 @@ def accelerate_military(server,para,opener):
             print '队列',i,':',resp;
     if (para['qi_acc'] > 0):
         print '骑兵';
-        num = operation.get_queue_num_QiBing(server,opener);
+        num = operation.get_queue_num_QiBing(server,opener,httpPara);
         print '队列数:',num;
         for i in range(0,num):
-            resp = operation.accelerate_military(server,18,pkeys['18'],i,opener);
+            resp = operation.accelerate_military(server,18,pkeys['18'],i,opener,httpPara);
             resp = resp.read();
             if (resp.find('激活成功！') == -1):
                 resp = '当前城池没有征募兵任务，或最少10秒一个';
@@ -38,10 +38,10 @@ def accelerate_military(server,para,opener):
             print '队列',i,':',resp;
     if (para['che_acc'] > 0):
         print '攻城车';
-        num = operation.get_queue_num_GongCheng(server,opener);
+        num = operation.get_queue_num_GongCheng(server,opener,httpPara);
         print '队列数:',num;
         for i in range(0,num):
-            resp = operation.accelerate_military(server,19,pkeys['19'],i,opener);
+            resp = operation.accelerate_military(server,19,pkeys['19'],i,opener,httpPara);
             resp = resp.read();
             if (resp.find('激活成功！') == -1):
                 resp = '当前城池没有征募兵任务，或最少10秒一个';
@@ -50,10 +50,10 @@ def accelerate_military(server,para,opener):
             print '队列',i,':',resp;
     if (para['te_acc'] > 0):
         print '特殊兵种';
-        num = operation.get_queue_num_TeShu(server,opener);
+        num = operation.get_queue_num_TeShu(server,opener,httpPara);
         print '队列数:',num;
         for i in range(0,num):
-            resp = operation.accelerate_military(server,20,pkeys['20'],i,opener);
+            resp = operation.accelerate_military(server,20,pkeys['20'],i,opener,httpPara);
             resp = resp.read();
             if (resp.find('激活成功！') == -1):
                 resp = '当前城池没有征募兵任务，或最少10秒一个';
@@ -63,32 +63,32 @@ def accelerate_military(server,para,opener):
     time.sleep(time_1000_second * para['time_delay'])
     return ;
 
-def accelerate_building(server,para,opener):
-    info = operation.get_building_information(server,opener);
+def accelerate_building(server,para,opener,httpPara):
+    info = operation.get_building_information(server,opener,httpPara);
     if (info == "无在建建筑"):
         print "无在建建筑";
     elif (para['model_acc'] > 0):
-        sids = operation.get_build_sids(server,info['queue_id'],opener);
+        sids = operation.get_build_sids(server,info['queue_id'],opener,httpPara);
         if (info['need_time'] < 3600):
             if (sids['model'] > 0):
-                resp = operation.accelerate_building(server,info['queue_id'],sids['33'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['33'],opener,httpPara);
             else:
-                resp = operation.accelerate_building(server,info['queue_id'],sids['30'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['30'],opener,httpPara);
         elif (info['need_time'] < 16200):
             if (sids['model'] > 0):
-                resp = operation.accelerate_building(server,info['queue_id'],sids['32'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['32'],opener,httpPara);
             else:
-                resp = operation.accelerate_building(server,info['queue_id'],sids['29'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['29'],opener,httpPara);
         elif (info['need_time'] < 25200):
             if (sids['model'] > 0):
-                resp = operation.accelerate_building(server,info['queue_id'],sids['31'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['31'],opener,httpPara);
             else:
-                resp = operation.accelerate_building(server,info['queue_id'],sids['28'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['28'],opener,httpPara);
         else:
             if (sids['model'] > 0):
-                resp = operation.accelerate_building(server,info['queue_id'],sids['13'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['13'],opener,httpPara);
             else:
-                resp = operation.accelerate_building(server,info['queue_id'],sids['12'],opener);
+                resp = operation.accelerate_building(server,info['queue_id'],sids['12'],opener,httpPara);
         print resp.read();
     return;
 
@@ -130,7 +130,7 @@ def accelerate_technology_delay(server,opener,httpPara):
     return ;
 
 
-def accelerate_once(server,para,opener):
+def accelerate_once(server,para,opener,httpPara):
     return ;
 
 def main_program():

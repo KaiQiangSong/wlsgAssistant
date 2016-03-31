@@ -4,3 +4,4 @@ bu_acc = 1
 qi_acc = 1
 che_acc = 1
 te_acc = 1
+time_change_soldiers = 30
