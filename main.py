@@ -18,6 +18,7 @@ import trainSoldiers;
 import accelerate;
 import Building;
 import activate_buffs;
+import get_informations;
 
 # Set Default Timeout Way 1
 #default_timeout = 10;
@@ -27,4 +28,4 @@ import activate_buffs;
 
 # Main Program
 
-trainSoldiers.main_program();
+get_informations.main_program();

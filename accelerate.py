@@ -130,9 +130,6 @@ def accelerate_technology_delay(server,opener,httpPara):
     return ;
 
 
-def accelerate_once(server,para,opener,httpPara):
-    return ;
-
 def main_program():
     userList = tools.load_user('user.txt');
     httpPara = tools.load_para('httpPara.txt');
@@ -143,20 +140,14 @@ def main_program():
             username = userList[str(i)]['username'];
             password = userList[str(i)]['password'];
             connection = userList[str(i)]['connection'];
-
-            if (connection['error'] != ''):
-                print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
-                print 'Server :',server;
-                print 'User   :',username;
-                print 'Login Failed';
-                print '\n\n\n';
-                continue;
-            opener = connection['opener'];
-
             timer= time.localtime();
             print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
             print 'Server :',server;
             print 'User   :',username;
-
+            if (connection['error'] != ''):
+                print 'Login Failed';
+                print '\n\n\n';
+                continue;
+            opener = connection['opener'];
             accelerate_technology_delay(server,opener,httpPara);
             print '\n\n\n';

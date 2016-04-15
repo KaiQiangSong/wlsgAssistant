@@ -60,19 +60,18 @@ def main_program():
         password = userList[str(i)]['password'];
         connection = userList[str(i)]['connection'];
 
+        timer= time.localtime();
+        print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
+        print 'Server :',server;
+        print 'User   :',username;
+
+
         if (connection['error'] != ''):
-            print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
-            print 'Server :',server;
-            print 'User   :',username;
             print 'Login Failed';
             print '\n\n\n';
             continue;
         opener = connection['opener'];
 
-        timer= time.localtime();
-        print 'Time   :',str(timer.tm_hour)+':'+str(timer.tm_min)+':'+str(timer.tm_sec);
-        print 'Server :',server;
-        print 'User   :',username;
 
         resp = activate_buffs_delay(server,'34',num,opener,httpPara);
         resp = activate_buffs_delay(server,'35',num,opener,httpPara);

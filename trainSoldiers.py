@@ -90,6 +90,7 @@ def train_soldier_delay(server,para,setting,cityID,opener,httpPara):
 def change_Soldiers_once(server,setting,opener,httpPara):
     soldiers = operation.get_change_Soldiers(server,opener,httpPara);
     if (setting[8] > 0):
+        print 'Change1';
         sid = str(setting[8]);
         num = (soldiers[sid] / 100 - setting[9]) * 100;
         if (num > 0):
@@ -98,6 +99,7 @@ def change_Soldiers_once(server,setting,opener,httpPara):
             resp = resp.read();
             print resp;
     if (setting[10] > 0):
+        print 'Change2';
         sid = str(setting[10]);
         num = (soldiers[sid] / 100 - setting[11]) * 100;
         if (num > 0):
@@ -106,6 +108,7 @@ def change_Soldiers_once(server,setting,opener,httpPara):
             resp = resp.read();
             print resp;
     if (setting[12] > 0):
+        print 'Change3';
         sid = str(setting[12]);
         num = (soldiers[sid] / 100 - setting[13]) * 100;
         if (num > 0):
