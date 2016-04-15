@@ -10,7 +10,27 @@ import socket;
 time_delay_default = 100;
 time_1000_second = 0.001;
 
+def citysPrint(citys,output,start,end):
+    num = citys['num'];
+    start = max(start-1,0);
+    end = min(end,num);
+    for i in range(start,end):
+        x = citys[str(i)]['x'];
+        y = citys[str(i)]['y'];
+        name = citys[str(i)]['name'];
+        output.write(name);
+        output.write(' ');
+        output.write(str(x));
+        output.write('|');
+        output.write(str(y));
+        output.write('\n');
+    return;
+
 def main_program():
+    file_name = raw_input('Please input the file name of result:\n');
+    start = input('Please input start city: (From 1 to 5)\n');
+    end = input('Please input end city(From 1 to 5):\n');
+    output = open(file_name,'w');
     userList = tools.load_user('user.txt');
     httpPara = tools.load_para('httpPara.txt');
     login.login_all(userList,httpPara);
@@ -34,5 +54,5 @@ def main_program():
         print 'Server :',server;
         print 'User   :',username;
         citys = operation.get_citys(server,opener,httpPara);
-        print citys;
-        print '\n\n\n';
+        citysPrint(citys,output,start,end);
+    output.close();
