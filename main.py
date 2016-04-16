@@ -19,6 +19,7 @@ import accelerate;
 import Building;
 import activate_buffs;
 import get_informations;
+import activate_vip;
 
 # Set Default Timeout Way 1
 #default_timeout = 10;
@@ -28,4 +29,4 @@ import get_informations;
 
 # Main Program
 
-get_informations.main_program();
+activate_vip.main_program();

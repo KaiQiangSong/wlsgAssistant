@@ -915,3 +915,66 @@ def get_change_Soldiers(server,opener,httpPara):
         #print s2;
         pos = resp.find('<input type="hidden" name="',pos2+1);
     return soldiers;
+
+
+def activate_vip(server,vipType,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/vip.php';
+    para = {
+        'ajaxId':'_1460753029498',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'action':'d',
+        'request':'exchange',
+        'vip_type':vipType,
+        'r':'1460753069764'
+    };
+    return tools.post(url,para,opener,httpPara);
+
+def check_vip(server,opener,httpPara):
+    url = 'http://'+server+'.sg.9wee.com/modules/vip.php';
+    para = {
+        'ajaxId':'_1460753035655',
+        'act':'d',
+        'type':'e',
+        'cache':'false',
+        'r':'1460753035656'
+    };
+    return tools.post(url,para,opener,httpPara);
+
+def get_vip_info(server,opener,httpPara):
+    resp = check_vip(server,opener,httpPara);
+    resp = resp.read();
+    pos = resp.find('当前身份');
+    pos1 = resp.find('<div class="sg_lm_m_c">',pos);
+    pos2 = resp.find('</div>',pos1);
+    str1 = resp[pos1+23:pos2];
+    info = {};
+    info['vType'] = -1;
+    if (str1.find('普通用户') != -1):
+        info['vType'] = 0;
+    if (str1.find('白金VIP') != -1):
+        info['vType'] = 136;
+    if (str1.find('钻石VIP') != -1):
+        info['vType'] = 137;
+    if (info['vType'] > 0):
+        pos1 = str1.find('：');
+        pos2 = str1.find('-');
+        tstr = str1[pos1+3:pos2];
+        info['year'] = string.atoi(tstr);
+        pos3 = str1.find('-',pos2+1);
+        tstr = str1[pos2+1:pos3];
+        info['month'] = string.atoi(tstr);
+        pos4 = str1.find(' ',pos3+1);
+        tstr = str1[pos3+1:pos4];
+        info['day'] = string.atoi(tstr);
+        pos5 = str1.find(':',pos4+1);
+        tstr = str1[pos4+1:pos5];
+        info['hour'] = string.atoi(tstr);
+        pos6 = str1.find(':',pos5+1);
+        tstr = str1[pos5+1:pos6];
+        info['minute'] = string.atoi(tstr);
+        pos7 = str1.find(')',pos6+1);
+        tstr = str1[pos6+1:pos7];
+        info['second'] = string.atoi(tstr);
+    return info;
